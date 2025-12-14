@@ -206,87 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Handle subscription form
-    function setupSubscriptionForm() {
-        const form = document.getElementById('subscribe-form');
-        const emailInput = document.getElementById('email');
-        const submitBtn = document.getElementById('subscribe-btn');
-        const btnText = submitBtn.querySelector('.btn-text');
-        const btnLoading = submitBtn.querySelector('.btn-loading');
-        const messageDiv = document.getElementById('subscribe-message');
-        
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = emailInput.value.trim();
-            
-            if (!email || !email.includes('@')) {
-                showMessage('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'inline';
-            
-            try {
-                const response = await fetch('/.netlify/functions/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email }),
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    if (data.status === 'existing') {
-                        showMessage('You\'re already subscribed!', 'existing');
-                    } else {
-                        showMessage('Successfully subscribed! You\'ll be notified when AI discovers new milestones.', 'success');
-                        emailInput.value = '';
-                        
-                        // Track successful subscription
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'subscribe', {
-                                'event_category': 'engagement',
-                                'event_label': 'email_subscription',
-                                'value': 1
-                            });
-                        }
-                    }
-                } else {
-                    throw new Error(data.error || 'Subscription failed');
-                }
-                
-            } catch (error) {
-                console.error('Subscription error:', error);
-                showMessage('Failed to subscribe. Please try again later.', 'error');
-            }
-            
-            // Reset button state
-            submitBtn.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
-        });
-        
-        function showMessage(text, type) {
-            messageDiv.textContent = text;
-            messageDiv.className = `subscribe-message ${type}`;
-            
-            // Clear message after 5 seconds
-            setTimeout(() => {
-                messageDiv.textContent = '';
-                messageDiv.className = 'subscribe-message';
-            }, 5000);
-        }
-    }
-    
     // Initialize the application
     loadEvents();
-    setupSubscriptionForm();
 });
 
 // Track timeline event clicks

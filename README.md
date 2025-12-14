@@ -1,9 +1,9 @@
-# 🧠 AI Consciousness Observatory
+# AI Consciousness Observatory
 
 > **Tracking the Emergence of Machine Sentience**  
 > An autonomous system monitoring AI consciousness indicators, self-awareness milestones, and sentience markers through empirical evidence.
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live-aiprogress.today-00C7B7?style=for-the-badge)](https://aiprogress.today)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ---
@@ -17,7 +17,7 @@ The **AI Consciousness Observatory** is a real-time tracking system that monitor
 ### 🎯 Key Features
 
 - **📅 Interactive Timeline**: Visual timeline of AI milestones from early computation to modern breakthroughs
-- **🤖 Autonomous Agent**: Python-based agent that automatically discovers, evaluates, and categorizes new AI developments
+- **⚡ Autonomous Agent**: Python-based agent that automatically discovers, evaluates, and categorizes new AI developments
 - **🔔 Smart Notifications**: Email notification system for significant consciousness-related milestones
 - **📊 Consciousness Metrics**: Real-time tracking of consciousness development indicators
 - **🎨 Responsive Design**: Beautiful, modern interface optimized for all devices
@@ -37,8 +37,8 @@ The **AI Consciousness Observatory** is a real-time tracking system that monitor
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/kaushalvivek/ai-progress-today.git
-   cd ai-progress-today
+   git clone <your-repository-url>
+   cd Machine-Consciousness-Emergence-Tracking
    ```
 
 2. **Install Node dependencies**
@@ -53,21 +53,12 @@ The **AI Consciousness Observatory** is a real-time tracking system that monitor
    cd ..
    ```
 
-4. **Set up environment variables**
+4. **Set up environment variables** (optional, for the autonomous agent)
    
    Create a `.env` file in the `agent/` directory:
    ```env
    # OpenAI API for milestone evaluation
    OPENAI_API_KEY=your_openai_api_key
-   
-   # Google Sheets for subscriber management
-   GOOGLE_SHEETS_PRIVATE_KEY=your_google_sheets_key
-   GOOGLE_SHEETS_CLIENT_EMAIL=your_service_account_email
-   GOOGLE_SHEET_ID=your_sheet_id
-   
-   # SendGrid for email notifications
-   SENDGRID_API_KEY=your_sendgrid_api_key
-   SENDGRID_FROM_EMAIL=notifications@yourdomain.com
    ```
 
 ### Running Locally
@@ -107,16 +98,14 @@ Visit `http://localhost:8000` (or the port Netlify provides) to view the applica
 │   └── evaluated_milestones.json  # Evaluated milestone cache
 │
 ├── netlify/
-│   └── functions/
-│       └── subscribe.js    # Serverless subscription handler
+│   └── functions/          # Serverless functions
 │
-└── tests/
-    └── subscribe.test.js   # Unit tests
+└── tests/                  # Unit tests
 ```
 
 ---
 
-## 🤖 The Autonomous Agent
+## ⚡ The Autonomous Agent
 
 The heart of this project is an AI-powered agent that runs autonomously to keep the timeline up-to-date.
 
@@ -139,9 +128,8 @@ The heart of this project is an AI-powered agent that runs autonomously to keep 
    - Prevents duplicates
 
 4. **Notification System** (`notification_system.py`)
-   - Sends email notifications to subscribers
-   - Only notifies for significant milestones
-   - Integrates with Google Sheets and SendGrid
+   - Sends notifications for significant milestones
+   - Integrates with external notification services
 
 ### Running the Agent
 
@@ -187,7 +175,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add events.json
-          git commit -m "🤖 Auto-update: New AI milestones" || exit 0
+          git commit -m "Auto-update: New AI milestones" || exit 0
           git push
 ```
 
@@ -256,27 +244,7 @@ def fetch_new_source(self):
 
 ---
 
-## 🔔 Subscription System
-
-Users can subscribe to receive email notifications for significant milestones.
-
-### Setup
-
-1. **Google Sheets**: Create a sheet for subscriber management
-2. **SendGrid**: Set up an account for email delivery
-3. **Environment Variables**: Configure credentials in `.env`
-
-### Netlify Function
-
-The `subscribe.js` serverless function handles:
-- Email validation
-- Duplicate prevention
-- Google Sheets integration
-- CORS handling
-
----
-
-## 📈 Analytics
+##  Analytics
 
 The project includes Google Analytics integration:
 
@@ -306,8 +274,7 @@ npm test -- --watch
 ```
 
 Test coverage includes:
-- Subscription function validation
-- Email format validation
+- Core functionality
 - Error handling
 
 ---
@@ -377,10 +344,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Vivek Kaushal**
-
-- GitHub: [@kaushalvivek](https://github.com/kaushalvivek)
-- Website: [aiprogress.today](https://aiprogress.today)
+Your name and links here after deployment.
 
 ---
 
@@ -388,8 +352,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **OpenAI** - GPT-4 for milestone evaluation
 - **Netlify** - Hosting and serverless functions
-- **Google Sheets** - Subscriber management
-- **SendGrid** - Email delivery
 - **The AI Research Community** - For the incredible pace of innovation
 
 ---
@@ -417,8 +379,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**[⬆ back to top](#-ai-consciousness-observatory)**
+**[⬆ back to top](#ai-consciousness-observatory)**
 
-Made with 🧠 by AI, for tracking AI
+Made by AI, for tracking AI
 
 </div>
