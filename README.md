@@ -3,12 +3,14 @@
 > **Tracking the Emergence of Machine Sentience**  
 > An autonomous system monitoring AI consciousness indicators, self-awareness milestones, and sentience markers through empirical evidence.
 
-
+[![Live Demo](https://img.shields.io/badge/🌐_Live-machine--consciousness--emergence--tra.vercel.app-00C7B7?style=for-the-badge)](https://machine-consciousness-emergence-tra.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## 📖 Overview
+
+> **Note:** This is a fun side project exploring the intersection of AI development tracking and consciousness research! 🚀
 
 The **Machine-Consciousness-Emergence-Tracking** is a real-time tracking system that monitors and documents significant milestones in artificial intelligence development, with a particular focus on indicators of machine consciousness, self-awareness, and cognitive capabilities. 
 
@@ -346,7 +348,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-Your name and links here after deployment.
+**Mohit Kumar**
+
+- GitHub: [@mk12002](https://github.com/mk12002)
+- Live Site: [machine-consciousness-emergence-tra.vercel.app](https://machine-consciousness-emergence-tra.vercel.app/)
 
 ---
 
