@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "Timeline tracking humanity's journey toward AGI",
   "main": "index.html",
-  "dependencies": {
-    "google-auth-library": "^9.4.1",
-    "google-spreadsheet": "^4.1.2"
-  },
+  "dependencies": {},
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "python -m http.server 8000",
     "build": "echo 'No build step required'",
-    "deploy": "netlify deploy --prod",
+    "deploy": "vercel --prod",
     "test": "jest"
   },
   "keywords": [

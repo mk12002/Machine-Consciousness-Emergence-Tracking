@@ -31,7 +31,7 @@ class MilestoneEvaluator:
         if self.provider == 'groq':
             # FREE and FAST! Get API key from https://console.groq.com
             from groq import Groq
-            api_key = os.getenv('GROQ_API_KEY')
+            api_key = os.getenv('XAI_API_KEY')
             if not api_key:
                 raise ValueError("GROQ_API_KEY not found. Get free key at: https://console.groq.com")
             self.client = Groq(api_key=api_key)

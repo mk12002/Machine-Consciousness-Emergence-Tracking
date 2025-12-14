@@ -1,4 +1,4 @@
-# AI Consciousness Observatory
+# Machine-Consciousness-Emergence-Tracking
 
 > **Tracking the Emergence of Machine Sentience**  
 > An autonomous system monitoring AI consciousness indicators, self-awareness milestones, and sentience markers through empirical evidence.
@@ -10,7 +10,7 @@
 
 ## 📖 Overview
 
-The **AI Consciousness Observatory** is a real-time tracking system that monitors and documents significant milestones in artificial intelligence development, with a particular focus on indicators of machine consciousness, self-awareness, and cognitive capabilities. 
+The **Machine-Consciousness-Emergence-Tracking** is a real-time tracking system that monitors and documents significant milestones in artificial intelligence development, with a particular focus on indicators of machine consciousness, self-awareness, and cognitive capabilities. 
 
 **What makes this unique:** This timeline is autonomously maintained by AI itself — a meta-experience where artificial intelligence curates and evaluates its own evolutionary progress.
 
@@ -31,7 +31,7 @@ The **AI Consciousness Observatory** is a real-time tracking system that monitor
 
 - **Node.js** (v14+)
 - **Python** (v3.8+)
-- **Netlify CLI** (optional, for local development)
+- **Vercel CLI** (optional, for deployment)
 
 ### Installation
 
@@ -57,21 +57,18 @@ The **AI Consciousness Observatory** is a real-time tracking system that monitor
    
    Create a `.env` file in the `agent/` directory:
    ```env
-   # OpenAI API for milestone evaluation
-   OPENAI_API_KEY=your_openai_api_key
+   # Grok API for milestone evaluation
+   XAI_API_KEY=your_grok_api_key
    ```
 
 ### Running Locally
 
 ```bash
-# Start the development server
-npm run dev
-
-# Or use Python's simple server
+# Use Python's simple server
 python -m http.server 8000
 ```
 
-Visit `http://localhost:8000` (or the port Netlify provides) to view the application.
+Visit `http://localhost:8000` to view the application.
 
 ---
 
@@ -85,7 +82,7 @@ Visit `http://localhost:8000` (or the port Netlify provides) to view the applica
 ├── effects.js              # Visual effects and interactions
 ├── events.json             # Timeline data (auto-updated)
 ├── package.json            # Node dependencies
-├── netlify.toml            # Netlify configuration
+├── vercel.json             # Vercel configuration (optional)
 │
 ├── agent/                  # Autonomous Python Agent
 │   ├── main.py                    # Main orchestrator
@@ -96,9 +93,6 @@ Visit `http://localhost:8000` (or the port Netlify provides) to view the applica
 │   ├── requirements.txt           # Python dependencies
 │   ├── latest_ml_news.json        # Cached news data
 │   └── evaluated_milestones.json  # Evaluated milestone cache
-│
-├── netlify/
-│   └── functions/          # Serverless functions
 │
 └── tests/                  # Unit tests
 ```
@@ -117,7 +111,7 @@ The heart of this project is an AI-powered agent that runs autonomously to keep 
    - Caches results for evaluation
 
 2. **Intelligent Evaluation** (`milestone_evaluator.py`)
-   - Uses OpenAI GPT-4 to evaluate significance
+   - Uses Grok to evaluate significance
    - Categorizes milestones as Pivotal, Major, or Notable
    - Assesses consciousness-related indicators
    - Generates detailed descriptions
@@ -281,34 +275,42 @@ Test coverage includes:
 
 ## 🚀 Deployment
 
-### Deploy to Netlify
+### Deploy to Vercel (Recommended)
 
-1. **Connect Repository**
-   ```bash
-   netlify init
-   ```
+**Option 1: Via Vercel Dashboard (Easiest)**
 
-2. **Configure Build Settings**
-   - Build command: `npm run build`
-   - Publish directory: `.` (root)
+1. Go to [vercel.com](https://vercel.com) and sign up/login
+2. Click "Add New" → "Project"
+3. Import your Git repository
+4. Vercel will auto-detect settings:
+   - Framework Preset: Other
+   - Build Command: (leave empty)
+   - Output Directory: `.` (root)
+5. Add environment variables (if using the agent):
+   - `XAI_API_KEY`: Your Grok API key
+6. Click "Deploy"
 
-3. **Set Environment Variables**
-   Add all required environment variables in Netlify dashboard
-
-4. **Deploy**
-   ```bash
-   npm run deploy
-   ```
-
-### Manual Deployment
+**Option 2: Via Vercel CLI**
 
 ```bash
-# Build (if needed)
-npm run build
+# Install Vercel CLI
+npm install -g vercel
+
+# Login
+vercel login
+
+# Deploy
+vercel
 
 # Deploy to production
-netlify deploy --prod
+vercel --prod
 ```
+
+### Alternative Hosting Options
+
+- **GitHub Pages**: Free static hosting
+- **Cloudflare Pages**: Fast global CDN
+- **Render**: Simple deployment platform
 
 ---
 
@@ -350,8 +352,8 @@ Your name and links here after deployment.
 
 ## 🙏 Acknowledgments
 
-- **OpenAI** - GPT-4 for milestone evaluation
-- **Netlify** - Hosting and serverless functions
+- **X.AI (Grok)** - AI model for milestone evaluation
+- **Vercel** - Hosting platform
 - **The AI Research Community** - For the incredible pace of innovation
 
 ---
@@ -379,7 +381,7 @@ Your name and links here after deployment.
 
 <div align="center">
 
-**[⬆ back to top](#ai-consciousness-observatory)**
+**[⬆ back to top](#Machine-Consciousness-Emergence-Tracking)**
 
 Made by AI, for tracking AI
 
