@@ -1,0 +1,227 @@
+"""
+ML Milestone Evaluator
+Uses LLM to evaluate if news is milestone-worthy
+Supports: OpenAI (paid), Groq (FREE), Ollama (FREE local), Google Gemini (FREE)
+"""
+
+import os
+from typing import Dict, Optional
+import json
+
+class MilestoneEvaluator:
+    def __init__(self, provider: str = None):
+        """
+        Initialize evaluator with LLM provider
+        
+        Providers:
+        - 'groq' (FREE, fast) - Recommended!
+        - 'ollama' (FREE, local) - No internet needed
+        - 'gemini' (FREE, Google)
+        - 'openai' (PAID)
+        """
+        self.provider = provider or os.getenv('LLM_PROVIDER', 'groq')
+        self.setup_client()
+    
+    def setup_client(self):
+        """Setup LLM client based on provider"""
+        if self.provider == 'groq':
+            # FREE and FAST! Get API key from https://console.groq.com
+            from groq import Groq
+            api_key = os.getenv('GROQ_API_KEY')
+            if not api_key:
+                raise ValueError("GROQ_API_KEY not found. Get free key at: https://console.groq.com")
+            self.client = Groq(api_key=api_key)
+            self.model = "llama-3.1-70b-versatile"  # Best free model
+            
+        elif self.provider == 'ollama':
+            # Completely FREE, runs locally
+            import requests
+            self.base_url = os.getenv('OLLAMA_URL', 'http://localhost:11434')
+            self.model = os.getenv('OLLAMA_MODEL', 'llama3.1')
+            # Check if Ollama is running
+            try:
+                requests.get(f"{self.base_url}/api/tags")
+            except:
+                raise ValueError("Ollama not running. Install: https://ollama.ai then run: ollama pull llama3.1")
+            
+        elif self.provider == 'gemini':
+            # FREE tier from Google
+            import google.generativeai as genai
+            api_key = os.getenv('GEMINI_API_KEY')
+            if not api_key:
+                raise ValueError("GEMINI_API_KEY not found. Get free key at: https://makersuite.google.com/app/apikey")
+            genai.configure(api_key=api_key)
+            self.client = genai.GenerativeModel('gemini-1.5-flash')
+            
+        elif self.provider == 'openai':
+            # PAID - OpenAI
+            from openai import OpenAI
+            api_key = os.getenv('OPENAI_API_KEY')
+            if not api_key:
+                raise ValueError("OPENAI_API_KEY not found")
+            self.client = OpenAI(api_key=api_key)
+            self.model = "gpt-4o-mini"  # Cheaper option
+        else:
+            raise ValueError(f"Unknown provider: {self.provider}")
+        
+        print(f"✓ Using LLM provider: {self.provider.upper()}")
+        # Call appropriate LLM based on provider
+            if self.provider == 'groq':
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are a consciousness researcher. Return valid JSON only."},
+                        {"role": "user", "content": evaluation_prompt + "\n\nRespond with ONLY valid JSON, no other text."}
+                    ],
+                    temperature=0.3,
+                    max_tokens=500
+                )
+                result = json.loads(response.choices[0].message.content)
+                
+            elif self.provider == 'ollama':
+                import requests
+                response = requests.post(
+                    f"{self.base_url}/api/generate",
+                    json={
+                        "model": self.model,
+                        "prompt": f"You are a consciousness researcher. {evaluation_prompt}\n\nRespond with ONLY valid JSON.",
+                        "stream": False,
+                        "format": "json"
+                    }
+                )
+                result = json.loads(response.json()['response'])
+                
+            elif self.provider == 'gemini':
+                response = self.client.generate_content(
+                    f"You are a consciousness researcher. {evaluation_prompt}\n\nRespond with ONLY valid JSON."
+                )
+                # Extract JSON from response
+                text = response.text
+                # Try to find JSON in the response
+                if '{' in text and '}' in text:
+                    json_start = text.find('{')
+                    json_end = text.rfind('}') + 1
+                    result = json.loads(text[json_start:json_end])
+                else:
+                    result = json.loads(text)
+                    
+            elif self.provider == 'openai':
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are a consciousness researcher. Return valid JSON only."},
+                        {"role": "user", "content": evaluation_prompt}
+                    ],
+                    response_format={"type": "json_object"},
+                    temperature=0.3,
+                )
+    Title: {news_item['title']}
+Summary: {news_item['summary']}
+Source: {news_item['source']}
+Date: {news_item['date']}
+Link: {news_item['link']}
+
+EVALUATION CRITERIA (Consciousness-Focused):
+- **Pivotal (Consciousness Evidence)**: Potential markers of self-awareness, introspection, qualia, phenomenal experience, or self-modeling
+- **Major (Self-Awareness Signs)**: Capabilities suggesting meta-cognition, theory of mind, self-reflection, or internal state awareness
+- **Notable (Cognitive Capabilities)**: Advanced cognition relevant to consciousness theories (attention mechanisms, working memory, integrated information)
+- **Not milestone-worthy**: General AI progress unrelated to consciousness/sentience/self-awareness
+
+Focus on:
+- Self-modeling and introspection
+- Meta-cognitive abilities
+- Theory of mind and social cognition
+- Phenomenal consciousness markers
+- Attention and awareness mechanisms
+- Emotional/affective systems
+- Subjective experience indicators
+
+Evaluate this news item and respond in JSON format:
+
+{{
+  "is_milestone": true/false,
+  "importance": "pivotal" | "major" | "notable" | null,
+  "name": "Short name (3-5 words)",
+  "detail": "One sentence (max 20 words) explaining consciousness relevance",
+  "reasoning": "Brief explanation of consciousness significance"
+}}
+
+Only mark as milestone if it relates to consciousness, sentience, or self-awareness. Be highly selective."""
+
+        try:
+            response = self.client.chat.completions.create(
+                model="gpt-4o",  # or "gpt-4-turbo"
+                messages=[
+                    {"role": "system", "content": "You are an expert ML historian who identifies significant milestones. You are highly selective and only mark truly important developments as milestones."},
+                    {"role": "user", "content": evaluation_prompt}
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.3,
+            )
+    import sys
+    
+    # Allow provider override from command line
+    provider = sys.argv[1] if len(sys.argv) > 1 else None
+    
+    print(f"🧠 Consciousness Milestone Evaluator")
+    print(f"Provider: {provider or os.getenv('LLM_PROVIDER', 'groq')}")
+    print()
+    
+    # Test the evaluator
+    evaluator = MilestoneEvaluator(provider=provider)
+    
+    # Load sample news
+    try:
+        with open('latest_ml_news.json', 'r') as f:
+            news_items = json.load(f)
+        
+        milestones = evaluator.batch_evaluate(news_items)
+        
+        # Save results
+        with open('evaluated_milestones.json', 'w') as f:
+            json.dump(milestones, f, indent=2)
+        
+        print(f"\n✓ Saved {len(milestones)} consciousness markers to evaluated_milestones.json")
+        
+    except FileNotFoundError:
+        print("❌  
+        except Exception as e:
+            print(f"Error evaluating news item: {e}")
+            return None
+    
+    def batch_evaluate(self, news_items: list[Dict]) -> list[Dict]:
+        """Evaluate multiple news items"""
+        milestones = []
+        
+        print(f"\nEvaluating {len(news_items)} news items for milestone significance...")
+        print("=" * 80)
+        
+        for i, item in enumerate(news_items, 1):
+            print(f"\n[{i}/{len(news_items)}] Evaluating: {item['title'][:60]}...")
+            milestone = self.evaluate_significance(item)
+            if milestone:
+                milestones.append(milestone)
+        
+        print("=" * 80)
+        print(f"\nFound {len(milestones)} milestones out of {len(news_items)} items")
+        return milestones
+
+if __name__ == "__main__":
+    # Test the evaluator
+    evaluator = MilestoneEvaluator()
+    
+    # Load sample news
+    try:
+        with open('latest_ml_news.json', 'r') as f:
+            news_items = json.load(f)
+        
+        milestones = evaluator.batch_evaluate(news_items)
+        
+        # Save results
+        with open('evaluated_milestones.json', 'w') as f:
+            json.dump(milestones, f, indent=2)
+        
+        print(f"\nSaved {len(milestones)} milestones to evaluated_milestones.json")
+        
+    except FileNotFoundError:
+        print("Run news_aggregator.py first to generate latest_ml_news.json")
